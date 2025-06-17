@@ -1,53 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <title>WeatherPro - Modern Weather App</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="search-box">
-                <input type="text" placeholder="Enter Your Location" class="input-box">
-                <button class="fa-solid fa-magnifying-glass" id="searchBtn">
-
-                </button>
-            </div>
-        </div>
-        <div class="location-not-found">
-            <h1>Sorry,Location Not Found!!!</h1>
-            <img src="images/404.png" alt="">
-        </div>
-        <div class="weather-body">
-            <img src="images/cloud.png" alt="Weather Image" class="weather-img">
-            <div class="weather-box">
-                <p class="temperature">0<sup>°C</sup></p>
-                <p class="description">Light Rain</p>
-                <div class="weather-details">
-                    <div class="humidity">
-                        <i class="fa-sharp fa-solid fa-droplet"></i>
-                        <div class="text">
-                            <span id="humidity">45%</span>
-                            <p>Humidity</p>
-                        </div>
-                    </div>
-                    <div class="wind">
-                        <i class="fa-solid fa-wind"></i>
-                        <div class="text">
-                            <span id="wind-speed">12km/hr</span>
-                            <p>Wind Speed</p>
-                        </div>
-                    </div>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>WeatherPro</span>
+                </div>
+                <div class="header-controls">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="location-btn" id="locationBtn">
+                        <i class="fas fa-location-arrow"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
-    <script src="https://kit.fontawesome.com/3d4a80acbf.js" crossorigin="anonymous"></script>
-</body>
+        </header>
 
+        <!-- Main Container -->
+        <main class="main-container">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-box">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Search for a city..." class="search-input" id="searchInput">
+                        <button class="clear-btn" id="clearBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                        <span>Search</span>
+                    </button>
+                </div>
+                <div class="recent-searches" id="recentSearches">
+                    <h3>Recent Searches</h3>
+                    <div class="recent-list" id="recentList"></div>
+                </div>
+            </section>
+
+            <!-- Loading State -->
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Getting weather data...</p>
+            </div>
+
+            <!-- Error State -->
+            <div class="error-state" id="errorState">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2>Location Not Found</h2>
+                <p>We couldn't find weather data for that location. Please try again with a different city name.</p>
+                <button class="retry-btn" id="retryBtn">Try Again</button>
+            </div>
+
+            <!-- Weather Content -->
+            <div class="weather-content" id="weatherContent">
+                <!-- Current Weather -->
+                <section class="current-weather">
+                    <div class="weather-main">
+                        <div class="weather-info">
+                            <div class="location-info">
+                                <h1 class="city-name" id="cityName">London</h1>
+                                <p class="country" id="country">United Kingdom</p>
+                                <p class="date-time" id="dateTime">Monday, 15 Jan 2024 | 2:30 PM</p>
+                            </div>
+                            <div class="temperature-display">
+                                <span class="temperature" id="temperature">22°</span>
+                                <div class="temp-unit">
+                                    <button class="unit-btn active" data-unit="celsius">°C</button>
+                                    <button class="unit-btn" data-unit="fahrenheit">°F</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-visual">
+                            <img src="images/cloud.png" alt="Weather" class="weather-icon" id="weatherIcon">
+                            <p class="weather-description" id="weatherDescription">Partly Cloudy</p>
+                        </div>
+                    </div>
+
+                    <!-- Weather Stats -->
+                    <div class="weather-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="visibility">10 km</span>
+                                <span class="stat-label">Visibility</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="humidity">65%</span>
+                                <span class="stat-label">Humidity</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="windSpeed">12 km/h</span>
+                                <span class="stat-label">Wind Speed</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-thermometer-half"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="feelsLike">25°</span>
+                                <span class="stat-label">Feels Like</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-compress-arrows-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="pressure">1013 hPa</span>
+                                <span class="stat-label">Pressure</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="uvIndex">5</span>
+                                <span class="stat-label">UV Index</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hourly Forecast -->
+                <section class="hourly-forecast">
+                    <h2>24-Hour Forecast</h2>
+                    <div class="hourly-scroll" id="hourlyForecast">
+                        <!-- Hourly items will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- 7-Day Forecast -->
+                <section class="weekly-forecast">
+                    <h2>7-Day Forecast</h2>
+                    <div class="forecast-list" id="weeklyForecast">
+                        <!-- Weekly items will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Additional Info -->
+                <section class="additional-info">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>Sun & Moon</h3>
+                            <div class="sun-moon-info">
+                                <div class="sun-info">
+                                    <i class="fas fa-sun"></i>
+                                    <div>
+                                        <p>Sunrise</p>
+                                        <span id="sunrise">6:30 AM</span>
+                                    </div>
+                                </div>
+                                <div class="moon-info">
+                                    <i class="fas fa-moon"></i>
+                                    <div>
+                                        <p>Sunset</p>
+                                        <span id="sunset">7:45 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <h3>Air Quality</h3>
+                            <div class="air-quality">
+                                <div class="aqi-value" id="aqiValue">42</div>
+                                <div class="aqi-status" id="aqiStatus">Good</div>
+                                <div class="aqi-description">Air quality is satisfactory</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 WeatherPro. Powered by OpenWeatherMap API</p>
+        </footer>
+    </div>
+
+    <script src="https://kit.fontawesome.com/3d4a80acbf.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
 </html>
