@@ -1064,18 +1064,12 @@ body {
         min-width: 70px;
         padding: var(--spacing-xs);
     }
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .weather-card,.info-card,.forecast-section{
+        width: 100vw;
     }
 }
+
+
 
 /* Focus styles for keyboard navigation */
 button:focus,
@@ -1084,10 +1078,3 @@ input:focus {
     outline-offset: 2px;
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    :root {
-        --border-color: rgba(255, 255, 255, 0.5);
-        --card-bg: rgba(0, 0, 0, 0.8);
-    }
-}

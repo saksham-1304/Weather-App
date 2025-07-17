@@ -71,8 +71,7 @@ class WeatherApp {
     async handleSearchInput(e) {
         const query = e.target.value.trim();
         if (query.length > 2) {
-            // In a real app, you'd implement city suggestions here
-            // For now, we'll just show a simple suggestion
+            
             this.showSuggestions([query]);
         } else {
             this.hideSuggestions();
